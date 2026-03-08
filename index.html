@@ -3,71 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hi</title>
+    <title>Soowan Baek | Digital Hub</title>
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #1a1a1a;
-            --link-color: #0066cc;
-            --accent-color: #555555;
+            --bg: #ffffff;
+            --text: #1d1d1f;
+            --sub-text: #86868b;
+            --link: #0066cc;
+            --hr: #f5f5f7;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #1d1d1f;
+                --text: #f5f5f7;
+                --sub-text: #a1a1a6;
+                --link: #2997ff;
+                --hr: #323233;
+            }
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            max-width: 650px;
-            margin: 80px auto;
-            padding: 0 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 0 24px;
+            line-height: 1.7;
+            background-color: var(--bg);
+            color: var(--text);
+            word-break: keep-all;
         }
-        h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
-        p { margin: 1.2rem 0; }
-        a { color: var(--link-color); text-decoration: none; border-bottom: 1px solid transparent; transition: border-bottom 0.2s; }
-        a:hover { border-bottom: 1px solid var(--link-color); }
-        .metadata { color: var(--accent-color); font-size: 0.95rem; }
-        section { margin-top: 3rem; }
-        h2 { font-size: 1.2rem; font-weight: 600; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-top: 2rem; }
-        ul { list-style-type: none; padding: 0; }
-        li { margin-bottom: 0.5rem; }
-        .footer { margin-top: 5rem; font-size: 0.8rem; color: #888; }
+        header { margin-bottom: 60px; }
+        h1 { font-size: 24px; font-weight: 600; margin: 0; }
+        .description { color: var(--sub-text); margin-top: 8px; font-size: 16px; }
+        
+        section { margin-bottom: 48px; }
+        h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sub-text); margin-bottom: 16px; border-bottom: 1px solid var(--hr); padding-bottom: 8px; }
+        
+        .nav-list { list-style: none; padding: 0; }
+        .nav-item { margin-bottom: 12px; }
+        .nav-item a { text-decoration: none; color: var(--link); font-weight: 500; font-size: 17px; }
+        .nav-item .meta { font-size: 14px; color: var(--sub-text); margin-left: 8px; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .tag { background: var(--hr); padding: 4px 10px; border-radius: 6px; font-size: 13px; color: var(--sub-text); }
+        
+        footer { margin-top: 80px; font-size: 13px; color: var(--sub-text); }
+        a.social-link { color: var(--text); text-decoration: underline; text-underline-offset: 4px; font-size: 14px; margin-right: 12px; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>S B</h1>
-        <p class="metadata">I got sth to do.</p>
-    </header>
 
-    <main>
-        <section>
-            <p>
-                기술과 비즈니스 전략의 접점에서 가치를 설계합니다. 
-                현재는 <strong>Edge AI</strong>와 <strong>Physical Agents</strong>의 구조적 가능성을 탐구하며, 
-                그 과정에서 얻은 인사이트를 기록하고 배포합니다.
-            </p>
-        </section>
+<header>
+    <h1>Soowan Baek</h1>
+    <p class="description">기술과 전략의 접점에서 가치를 고민하고 기록합니다.</p>
+</header>
 
-        <section>
-            <h2>Channels</h2>
-            <ul>
-                <li>📝 <a href="https://note.soowanbaek.com">Technical Notes</a> (Hollo)</li>
-                <li>🔗 <a href="https://linkedin.com/in/soowanbaek">LinkedIn</a></li>
-                <li>📧 <a href="mailto:tkftvf@gmail.com">Email</a></li>
-            </ul>
-        </section>
+<main>
+    <section id="hubs">
+        <h2>Digital Hubs</h2>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="https://note.soowanbaek.com">Technical Notes</a>
+                <span class="meta">지식의 파편들을 정돈하는 개인 블로그</span>
+            </li>
+            <li class="nav-item">
+                <a href="https://linkedin.com/in/soowanbaek">Professional</a>
+                <span class="meta">기술 콘텐츠 플래너로서의 여정</span>
+            </li>
+        </ul>
+    </section>
 
-        <section>
-            <h2>Current Focus</h2>
-            <ul>
-                <li>Edge AI 기반 온디바이스 에이전트 구축</li>
-                <li>기술 전략 프레임워크 설계 및 콘텐츠 플래닝</li>
-                <li>Fediverse(연합 우주) 생태계와 탈중앙화 프로토콜 연구</li>
-            </ul>
-        </section>
-    </main>
+    <section id="interests">
+        <h2>Current Focus & Interests</h2>
+        <p>최근에는 아래 주제들에 몰입하여 탐구하고 있습니다.</p>
+        <div class="tags">
+            <span class="tag">#Edge AI</span>
+            <span class="tag">#Physical Agents</span>
+            <span class="tag">#On-Device AI</span>
+            <span class="tag">#Personal Development</span>
+            <span class="tag">#Habitus</span>
+            <span class="tag">#Fediverse</span>
+        </div>
+    </section>
 
-    <footer class="footer">
-        © 2026 Soowan Baek. Built with Minimalist HTML.
-    </footer>
+    <section id="connect">
+        <h2>Connect</h2>
+        <p>어디서든 편하게 인사를 건네주세요.</p>
+        <a href="mailto:수석님메일주소" class="social-link">Email</a>
+        <a href="https://note.soowanbaek.com/@sw" class="social-link">Mastodon</a>
+        <a href="https://github.com/수석님아이디" class="social-link">GitHub</a>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 Soowan Baek. 이 페이지는 Nginx와 Docker를 통해 Railway에 배포되었습니다.</p>
+</footer>
+
 </body>
 </html>
