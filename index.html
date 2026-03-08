@@ -3,103 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soowan's Room</title>
+    <title>#sb</title>
     <style>
-        :root {
-            --bg: #fbfbfd;
-            --text: #1d1d1f;
-            --sub: #6e6e73;
-            --accent: #8e8e93;
-            --link: #0071e3;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #000000;
-                --text: #f5f5f7;
-                --sub: #86868b;
-                --accent: #424245;
-            }
-        }
-        body {
-            font-family: "Pretendard Variable", -apple-system, system-ui, sans-serif;
-            max-width: 580px;
-            margin: 0 auto;
-            padding: 120px 24px;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-            word-break: keep-all;
-        }
-        header { margin-bottom: 80px; }
-        h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
-        .motto { color: var(--sub); font-size: 16px; margin-top: 10px; font-style: italic; }
-
-        section { margin-bottom: 64px; }
-        h2 { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 24px; }
+        :root { --bg: #fff; --tx: #1a1a1a; --dm: #707070; --hr: #eee; }
+        @media (prefers-color-scheme: dark) { :root { --bg: #111; --tx: #e0e0e0; --dm: #909090; --hr: #222; } }
         
-        .list { list-style: none; padding: 0; }
-        .list-item { margin-bottom: 20px; }
-        .list-item a { font-size: 18px; font-weight: 600; text-decoration: none; color: var(--link); }
-        .list-item p { font-size: 14px; color: var(--sub); margin: 4px 0 0 0; }
-
-        .shelf { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .book-card { background: var(--bg); border: 1px solid var(--accent); padding: 16px; border-radius: 12px; font-size: 14px; }
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; max-width: 600px; margin: 80px auto; padding: 0 24px; line-height: 1.7; background: var(--bg); color: var(--tx); word-break: keep-all; -webkit-font-smoothing: antialiased; }
         
-        .footer { margin-top: 120px; font-size: 12px; color: var(--accent); border-top: 1px solid var(--accent); padding-top: 24px; }
-        .footer a { color: var(--sub); margin-right: 12px; text-decoration: none; }
+        header, section { margin-bottom: 50px; }
+        h1 { font-size: 24px; font-weight: 700; margin: 0; letter-spacing: -0.02em; }
+        h2 { font-size: 12px; font-weight: 600; color: var(--dm); text-transform: uppercase; letter-spacing: 0.15em; border-bottom: 1px solid var(--hr); padding-bottom: 8px; margin-bottom: 20px; }
+        
+        .entry { display: flex; align-items: baseline; margin-bottom: 18px; }
+        .label { font-family: monospace; font-size: 11px; color: var(--dm); min-width: 100px; flex-shrink: 0; }
+        .content { font-size: 15px; }
+        a { color: var(--tx); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hr); font-weight: 600; transition: 0.2s; }
+        a:hover { text-decoration-color: var(--tx); }
+        .sub { margin: 4px 0 0 0; color: var(--dm); font-size: 14px; }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag { padding: 6px 14px; background: var(--hr); border-radius: 20px; text-decoration: none; color: var(--tx); font-size: 13px; font-weight: 500; }
+
+        .card { border: 1px solid var(--hr); border-radius: 12px; overflow: hidden; margin-top: 12px; }
+        .card-h { padding: 12px 20px; background: rgba(128,128,128,0.05); font-size: 13px; font-weight: 600; color: var(--dm); border-bottom: 1px solid var(--hr); }
+        .item { display: block; padding: 16px 20px; text-decoration: none; border-bottom: 1px solid var(--hr); transition: background 0.2s; }
+        .item:last-child { border-bottom: none; }
+        .item:hover { background: rgba(128,128,128,0.03); }
+
+        #aphorisms { position: relative; padding: 0 45px; }
+        .v { overflow: hidden; border: 1px solid var(--hr); border-radius: 12px; background: var(--bg); }
+        .track { display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+        .slide { flex: 0 0 100%; padding: 45px 25px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        
+        .btn { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--dm); font-size: 28px; cursor: pointer; padding: 10px; z-index: 5; opacity: 0.6; transition: 0.2s; }
+        .btn:hover { color: var(--tx); opacity: 1; }
+        .p { left: 0; } .n { right: 0; }
+        
+        .dots { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hr); cursor: pointer; }
+        .dot.active { background: var(--dm); }
+
+        .map { width: 100%; border-radius: 8px; filter: grayscale(1); opacity: 0.7; border: 1px solid var(--hr); margin-top: 12px; }
+        footer { margin-top: 100px; font-size: 12px; color: var(--dm); border-top: 1px dashed var(--hr); padding-top: 30px; text-align: center; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Soowan Baek</h1>
-    <p class="motto">"기술을 계획하고, 공간을 가꾸며, 혼자 걷는 여행을 즐깁니다."</p>
+    <h1>sb</h1>
+    <p style="color:var(--dm); font-size:14px; margin-top:4px;">Seoul, South Korea</p>
+    <p class="sub" style="font-style:italic; margin-top:12px;">"(작업 중) 기록을 안 하니, 나도 내가 어떻게 사는지 모르겠구만..."</p>
 </header>
 
 <main>
     <section>
-        <h2>Digital Garden</h2>
-        <ul class="list">
-            <li class="list-item">
-                <a href="https://note.soowanbaek.com">Technical Notes →</a>
-                <p>생각의 파편들을 수집하고 정돈하는 아카이브입니다.</p>
-            </li>
-            <li class="list-item">
-                <a href="/archive">Archive →</a>
-                <p>과거의 프로젝트들과 기록들을 모아둔 하위 디렉토리입니다.</p>
-            </li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>My Shelf & Space</h2>
-        <div class="shelf">
-            <div class="book-card">
-                <strong>Current Reading</strong><br>
-                하비투스 (Habitus)
-            </div>
-            <div class="book-card">
-                <strong>Favorite Style</strong><br>
-                오늘의집 미니멀 인테리어
-            </div>
+        <h2>What's bugging me</h2>
+        <div class="tags">
+            <a href="https://minimalism.org" class="tag" target="_blank">#Minimalism</a>
+            <a href="https://reading.hongminhee.org" class="tag" target="_blank">#Curation</a>
+            <a href="https://www.lonelyplanet.com" class="tag" target="_blank">#SoloTravel</a>
+            <a href="https://ondevice.ai" class="tag" target="_blank">#EdgeAI</a>
+            <a href="https://fediverse.party" class="tag" target="_blank">#Fediverse</a>
         </div>
     </section>
 
     <section>
-        <h2>Interests</h2>
-        <p style="font-size: 15px;">
-            요즘은 <strong>Edge AI</strong>와 <strong>Physical Agents</strong>에 대해 공부하고 있습니다. 
-            혼자 떠나는 여행에서 영감을 얻고, 잡지 같은 방을 만드는 것에 진심입니다.
-        </p>
+        <h2>Expensive Receipts</h2>
+        <div class="entry"><div class="label">Economics</div><div class="content">학부 주전공</div></div>
+        <div class="entry"><div class="label">Philosophy</div><div class="content">학부 다중전공</div></div>
+        <div class="entry"><div class="label">Statistics</div><div class="content">방통대 가서 배움</div></div>
+    </section>
+
+    <section>
+        <h2>Productive Procrastination</h2>
+        <div class="entry">
+            <div class="label">NOTES</div>
+            <div class="content"><a href="https://note.soowanbaek.com/@sw" target="_blank">Microblog</a><p class="sub">Ephemeral thoughts.</p></div>
+        </div>
+        <div class="entry" style="margin-top: 24px;">
+            <div class="label">INSIGHT</div>
+            <div class="content"><a href="https://xn--o39a90m89r.com/@kbnws" target="_blank">적독가(積讀家)</a><p class="sub">책은 읽으려고 사는 게 아니라, 샀기 때문에 언젠가 읽는 것이다...</p></div>
+        </div>
+
+        <div class="card">
+            <div class="card-h">SOUNDTRACKS</div>
+            <a href="https://www.youtube.com/watch?v=Y12ZQzh12Rw" target="_blank" class="item">
+                <div style="font-weight:600;">운동 많이 된다 모음집</div>
+                <div class="sub">도움 많이 된다</div>
+            </a>
+            <a href="https://www.youtube.com/playlist?list=PLS4jAfE9d3aIfAKzy3VwSNDfvBFxpnH-7" target="_blank" class="item">
+                <div style="font-weight:600;">Blood Orange - Essex Honey</div>
+                <div class="sub">Blood Orange</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=xgNqRJTw6WY" target="_blank" class="item">
+                <div style="font-weight:600;">Susumu Hirasawa - Byakkoya</div>
+                <div class="sub">멋쟁이 아저씨</div>
+            </a>
+        </div>
+    </section>
+
+    <section id="aphorisms">
+        <h2>Other People's Wisdom</h2>
+        <div class="v">
+            <div class="track" id="t">
+                <div class="slide">
+                    <p style="font-size:16px; font-weight:500;">"2시간짜리 은행 강도가 어디 있습니까?<br>천원 한 장 훔치지 않았으니 아무 일도 없었던 겁니다."</p>
+                    <p class="sub">- 무슨 일인가 떠오른다면 정답입니다.</p>
+                </div>
+                <div class="slide">
+                    <p style="font-size:16px; font-weight:500;">"さようなら, 全てのエヴァンゲリオン."<br>
+                    <span style="font-size:14px; opacity:0.8;">(안녕, 모든 에반게리온.)</span></p>
+                    <p class="sub">- 하지만 30주년 기념 완전 신작이 나와버리는...</p>
+                </div>
+                <div class="slide">
+                    <p style="font-size:16px; font-weight:500;">"Choose Reality. Choose Facebook, Twitter,<br>Instagram and hope that someone, somewhere cares."</p>
+                    <p class="sub">- Mark Renton (T2 Trainspotting)</p>
+                </div>
+            </div>
+        </div>
+        <button class="btn p" onclick="m(-1)">&#10094;</button>
+        <button class="btn n" onclick="m(1)">&#10095;</button>
+        <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+    </section>
+
+    <section>
+        <h2>Where I Got Lost</h2>
+        <img src="/img/travel-map.png" alt="Travel Map" class="map">
     </section>
 </main>
 
-<footer class="footer">
-    <a href="mailto:수석님메일">Email</a>
-    <a href="https://note.soowanbaek.com/@sw">Mastodon</a>
-    <a href="https://linkedin.com/in/수석님">LinkedIn</a>
-    <p style="margin-top: 20px;">Built by Soowan. Hosted on Railway.</p>
+<footer>
+    <div style="opacity:0.6; font-family:monospace; font-size:11px;">Powered by Nginx & Docker. Hosted on Railway.</div>
+    <p style="margin-top:10px; opacity:0.6;">© 2026 sb. No trackers, no cookies, just my ego.</p>
 </footer>
 
+<script>
+    let c=0; const t=document.getElementById('t'), d=document.querySelectorAll('.dot');
+    function m(n){ c=(c+n+3)%3; t.style.transform=`translateX(-${c*100}%)`; d.forEach((x,i)=>x.classList.toggle('active',i===c)); }
+    d.forEach((x,i)=>x.addEventListener('click',()=>m(i-c)));
+</script>
 </body>
 </html>
