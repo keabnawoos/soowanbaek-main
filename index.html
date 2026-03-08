@@ -3,99 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soowan Baek | Digital Hub</title>
+    <title>Soowan's Room</title>
     <style>
         :root {
-            --bg: #ffffff;
+            --bg: #fbfbfd;
             --text: #1d1d1f;
-            --sub-text: #86868b;
-            --link: #0066cc;
-            --hr: #f5f5f7;
+            --sub: #6e6e73;
+            --accent: #8e8e93;
+            --link: #0071e3;
         }
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #1d1d1f;
+                --bg: #000000;
                 --text: #f5f5f7;
-                --sub-text: #a1a1a6;
-                --link: #2997ff;
-                --hr: #323233;
+                --sub: #86868b;
+                --accent: #424245;
             }
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
-            max-width: 600px;
-            margin: 100px auto;
-            padding: 0 24px;
-            line-height: 1.7;
+            font-family: "Pretendard Variable", -apple-system, system-ui, sans-serif;
+            max-width: 580px;
+            margin: 0 auto;
+            padding: 120px 24px;
             background-color: var(--bg);
             color: var(--text);
+            line-height: 1.8;
             word-break: keep-all;
         }
-        header { margin-bottom: 60px; }
-        h1 { font-size: 24px; font-weight: 600; margin: 0; }
-        .description { color: var(--sub-text); margin-top: 8px; font-size: 16px; }
+        header { margin-bottom: 80px; }
+        h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+        .motto { color: var(--sub); font-size: 16px; margin-top: 10px; font-style: italic; }
+
+        section { margin-bottom: 64px; }
+        h2 { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 24px; }
         
-        section { margin-bottom: 48px; }
-        h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sub-text); margin-bottom: 16px; border-bottom: 1px solid var(--hr); padding-bottom: 8px; }
+        .list { list-style: none; padding: 0; }
+        .list-item { margin-bottom: 20px; }
+        .list-item a { font-size: 18px; font-weight: 600; text-decoration: none; color: var(--link); }
+        .list-item p { font-size: 14px; color: var(--sub); margin: 4px 0 0 0; }
+
+        .shelf { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .book-card { background: var(--bg); border: 1px solid var(--accent); padding: 16px; border-radius: 12px; font-size: 14px; }
         
-        .nav-list { list-style: none; padding: 0; }
-        .nav-item { margin-bottom: 12px; }
-        .nav-item a { text-decoration: none; color: var(--link); font-weight: 500; font-size: 17px; }
-        .nav-item .meta { font-size: 14px; color: var(--sub-text); margin-left: 8px; }
-        
-        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-        .tag { background: var(--hr); padding: 4px 10px; border-radius: 6px; font-size: 13px; color: var(--sub-text); }
-        
-        footer { margin-top: 80px; font-size: 13px; color: var(--sub-text); }
-        a.social-link { color: var(--text); text-decoration: underline; text-underline-offset: 4px; font-size: 14px; margin-right: 12px; }
+        .footer { margin-top: 120px; font-size: 12px; color: var(--accent); border-top: 1px solid var(--accent); padding-top: 24px; }
+        .footer a { color: var(--sub); margin-right: 12px; text-decoration: none; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Soowan Baek</h1>
-    <p class="description">기술과 전략의 접점에서 가치를 고민하고 기록합니다.</p>
+    <p class="motto">"기술을 계획하고, 공간을 가꾸며, 혼자 걷는 여행을 즐깁니다."</p>
 </header>
 
 <main>
-    <section id="hubs">
-        <h2>Digital Hubs</h2>
-        <ul class="nav-list">
-            <li class="nav-item">
-                <a href="https://note.soowanbaek.com">Technical Notes</a>
-                <span class="meta">지식의 파편들을 정돈하는 개인 블로그</span>
+    <section>
+        <h2>Digital Garden</h2>
+        <ul class="list">
+            <li class="list-item">
+                <a href="https://note.soowanbaek.com">Technical Notes →</a>
+                <p>생각의 파편들을 수집하고 정돈하는 아카이브입니다.</p>
             </li>
-            <li class="nav-item">
-                <a href="https://linkedin.com/in/soowanbaek">Professional</a>
-                <span class="meta">기술 콘텐츠 플래너로서의 여정</span>
+            <li class="list-item">
+                <a href="/archive">Archive →</a>
+                <p>과거의 프로젝트들과 기록들을 모아둔 하위 디렉토리입니다.</p>
             </li>
         </ul>
     </section>
 
-    <section id="interests">
-        <h2>Current Focus & Interests</h2>
-        <p>최근에는 아래 주제들에 몰입하여 탐구하고 있습니다.</p>
-        <div class="tags">
-            <span class="tag">#Edge AI</span>
-            <span class="tag">#Physical Agents</span>
-            <span class="tag">#On-Device AI</span>
-            <span class="tag">#Personal Development</span>
-            <span class="tag">#Habitus</span>
-            <span class="tag">#Fediverse</span>
+    <section>
+        <h2>My Shelf & Space</h2>
+        <div class="shelf">
+            <div class="book-card">
+                <strong>Current Reading</strong><br>
+                하비투스 (Habitus)
+            </div>
+            <div class="book-card">
+                <strong>Favorite Style</strong><br>
+                오늘의집 미니멀 인테리어
+            </div>
         </div>
     </section>
 
-    <section id="connect">
-        <h2>Connect</h2>
-        <p>어디서든 편하게 인사를 건네주세요.</p>
-        <a href="mailto:수석님메일주소" class="social-link">Email</a>
-        <a href="https://note.soowanbaek.com/@sw" class="social-link">Mastodon</a>
-        <a href="https://github.com/수석님아이디" class="social-link">GitHub</a>
+    <section>
+        <h2>Interests</h2>
+        <p style="font-size: 15px;">
+            요즘은 <strong>Edge AI</strong>와 <strong>Physical Agents</strong>에 대해 공부하고 있습니다. 
+            혼자 떠나는 여행에서 영감을 얻고, 잡지 같은 방을 만드는 것에 진심입니다.
+        </p>
     </section>
 </main>
 
-<footer>
-    <p>© 2026 Soowan Baek. 이 페이지는 Nginx와 Docker를 통해 Railway에 배포되었습니다.</p>
+<footer class="footer">
+    <a href="mailto:수석님메일">Email</a>
+    <a href="https://note.soowanbaek.com/@sw">Mastodon</a>
+    <a href="https://linkedin.com/in/수석님">LinkedIn</a>
+    <p style="margin-top: 20px;">Built by Soowan. Hosted on Railway.</p>
 </footer>
 
 </body>
