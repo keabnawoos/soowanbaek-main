@@ -5,143 +5,247 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>#sb</title>
     <style>
-        :root { --bg: #fff; --tx: #1a1a1a; --dm: #707070; --hr: #eee; }
-        @media (prefers-color-scheme: dark) { :root { --bg: #111; --tx: #e0e0e0; --dm: #909090; --hr: #222; } }
-        
+        :root { 
+            --bg: #FEFAE0; --tx-main: #283618; --dm: #4A4E69; --hr: #22223B; 
+            --accent: #BC4749; --link: #BC6C25; --card-bg: #FFFFFF;
+            --grass-success: #606C38; --grass-fail: #BC4749; --grass-none: rgba(221, 161, 94, 0.15);
+        }
         * { box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; max-width: 600px; margin: 80px auto; padding: 0 24px; line-height: 1.7; background: var(--bg); color: var(--tx); word-break: keep-all; -webkit-font-smoothing: antialiased; }
-        
-        header, section { margin-bottom: 50px; }
-        h1 { font-size: 24px; font-weight: 700; margin: 0; letter-spacing: -0.02em; }
-        h2 { font-size: 12px; font-weight: 600; color: var(--dm); text-transform: uppercase; letter-spacing: 0.15em; border-bottom: 1px solid var(--hr); padding-bottom: 8px; margin-bottom: 20px; }
-        
-        .entry { display: flex; align-items: baseline; margin-bottom: 18px; }
-        .label { font-family: monospace; font-size: 11px; color: var(--dm); min-width: 100px; flex-shrink: 0; }
-        .content { font-size: 15px; }
-        a { color: var(--tx); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hr); font-weight: 600; transition: 0.2s; }
-        a:hover { text-decoration-color: var(--tx); }
-        .sub { margin: 4px 0 0 0; color: var(--dm); font-size: 14px; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; 
+            max-width: 600px; margin: 80px auto; padding: 0 24px; line-height: 1.8; 
+            background: linear-gradient(180deg, #f2f9f4 0%, #c9ada7 100%) no-repeat fixed; 
+            word-break: keep-all;
+        }
+        header, section { margin-bottom: 55px; }
+        h1 { font-size: 26px; font-weight: 800; margin: 0; letter-spacing: -0.02em; }
+        h1 span { color: var(--accent); } 
+        h2 { font-size: 12px; font-weight: 700; color: var(--dm); text-transform: uppercase; letter-spacing: 0.15em; border-bottom: 2px solid var(--hr); padding-bottom: 8px; margin-bottom: 24px; }
 
-        .tags { display: flex; flex-wrap: wrap; gap: 10px; }
-        .tag { padding: 6px 14px; background: var(--hr); border-radius: 20px; text-decoration: none; color: var(--tx); font-size: 13px; font-weight: 500; }
+        /* [통합 아카이브 카드] */
+        .archive-box { background: var(--card-bg); border: 1px solid var(--hr); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(40, 54, 24, 0.05); }
+        .archive-section { padding: 25px; border-bottom: 1px dashed var(--hr); }
+        .archive-section:last-child { border-bottom: none; }
+        .inner-label { font-size: 10px; font-weight: 800; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 15px; display: block; }
 
-        .card { border: 1px solid var(--hr); border-radius: 12px; overflow: hidden; margin-top: 12px; }
-        .card-h { padding: 12px 20px; background: rgba(128,128,128,0.05); font-size: 13px; font-weight: 600; color: var(--dm); border-bottom: 1px solid var(--hr); }
-        .item { display: block; padding: 16px 20px; text-decoration: none; border-bottom: 1px solid var(--hr); transition: background 0.2s; }
-        .item:last-child { border-bottom: none; }
-        .item:hover { background: rgba(128,128,128,0.03); }
+        .stat-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 15px; }
+        .stat-v { font-size: 28px; font-weight: 800; color: var(--accent); }
+        .grass-box { display: flex; flex-wrap: wrap; gap: 4px; justify-content: start; }
+        .dot-g { width: 12px; height: 12px; border-radius: 2px; background: var(--grass-none); }
+        .dot-g.success { background: var(--grass-success); }
+        .dot-g.fail { background: var(--grass-fail); }
 
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag-sm { font-size: 13px; font-weight: 700; color: var(--dm); text-decoration: none; border-bottom: 1px solid var(--hr); padding-bottom: 1px; transition: 0.2s; }
+        .tag-sm:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* Log List (높이 고정 및 스크롤) */
+        .log-scroll { max-height: 320px; overflow-y: auto; margin-top: 5px; }
+        .log-scroll::-webkit-scrollbar { width: 3px; }
+        .log-scroll::-webkit-scrollbar-thumb { background: var(--hr); border-radius: 10px; }
+        .log-item { padding: 12px 0; border-bottom: 1px solid rgba(221, 161, 94, 0.2); display: block; text-decoration: none; }
+        .log-item:last-child { border-bottom: none; }
+
+        /* More Button Style */
+        .load-more-btn { width: 100%; padding: 15px 0; border: none; background: none; color: var(--dm); font-size: 10px; font-weight: 800; cursor: pointer; letter-spacing: 1.5px; transition: 0.2s; }
+        .load-more-btn:hover { color: var(--accent); background: rgba(188, 71, 73, 0.03); }
+
+        /* Slider */
         #aphorisms { position: relative; padding: 0 45px; }
-        .v { overflow: hidden; border: 1px solid var(--hr); border-radius: 12px; background: var(--bg); }
-        .track { display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
-        .slide { flex: 0 0 100%; padding: 45px 25px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; text-align: center; }
-        
-        .btn { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--dm); font-size: 28px; cursor: pointer; padding: 10px; z-index: 5; opacity: 0.6; transition: 0.2s; }
-        .btn:hover { color: var(--tx); opacity: 1; }
+        .v { overflow: hidden; border: 1px solid var(--hr); border-radius: 12px; background: var(--card-bg); }
+        .track { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .slide { flex: 0 0 100%; padding: 50px 30px; text-align: center; }
+        .btn { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--dm); font-size: 28px; cursor: pointer; padding: 10px; z-index: 5; }
         .p { left: 0; } .n { right: 0; }
-        
-        .dots { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
-        .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hr); cursor: pointer; }
-        .dot.active { background: var(--dm); }
+        .dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--hr); cursor: pointer; }
+        .dot.active { background: var(--accent); width: 18px; border-radius: 4px; }
 
-        .map { width: 100%; border-radius: 8px; filter: grayscale(1); opacity: 0.7; border: 1px solid var(--hr); margin-top: 12px; }
-        footer { margin-top: 100px; font-size: 12px; color: var(--dm); border-top: 1px dashed var(--hr); padding-top: 30px; text-align: center; }
+        .entry { display: flex; align-items: baseline; margin-bottom: 20px; }
+        .label { font-family: monospace; font-size: 11px; color: var(--dm); min-width: 100px; flex-shrink: 0; font-weight: 600; text-transform: uppercase; }
+        .content { font-size: 15px; font-weight: 600; }
+        .map { width: 100%; border-radius: 10px; border: 1px solid var(--hr); margin-top: 15px; }
+        footer { margin-top: 120px; font-size: 11px; color: var(--dm); border-top: 2px dashed var(--hr); padding-top: 40px; text-align: center; font-weight: 600; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>sb</h1>
-    <p style="color:var(--dm); font-size:14px; margin-top:4px;">Seoul, South Korea</p>
-    <p class="sub" style="font-style:italic; margin-top:12px;">"(작업 중) 기록을 안 하니, 나도 내가 어떻게 사는지 모르겠구만..."</p>
-</header>
+    <header>
+        <h1><span>#</span>sb</h1>
+        <p style="color:var(--dm); font-size:14px; font-weight:700; margin-top:4px;">Seoul, South Korea</p>
+        <p style="font-style:italic; margin-top:16px; color:var(--tx-main); font-size:15px; font-weight:600;">"기록을 안 하니, 나도 내가 어떻게 사는지 모르겠구만..."</p>
+    </header>
 
-<main>
-    <section>
-        <h2>What's bugging me</h2>
-        <div class="tags">
-            <a href="https://minimalism.org" class="tag" target="_blank">#Minimalism</a>
-            <a href="https://reading.hongminhee.org" class="tag" target="_blank">#Curation</a>
-            <a href="https://www.lonelyplanet.com" class="tag" target="_blank">#SoloTravel</a>
-            <a href="https://ondevice.ai" class="tag" target="_blank">#EdgeAI</a>
-            <a href="https://fediverse.party" class="tag" target="_blank">#Fediverse</a>
-        </div>
-    </section>
+    <main>
+        <section>
+            <h2>Expensive Receipts</h2>
+            <div class="entry"><div class="label">Economics</div><div class="content">학부 주전공</div></div>
+            <div class="entry"><div class="label">Philosophy</div><div class="content">학부 다중전공</div></div>
+            <div class="entry"><div class="label">Statistics</div><div class="content">방통대 가서 배움</div></div>
+        </section>
 
-    <section>
-        <h2>Expensive Receipts</h2>
-        <div class="entry"><div class="label">Economics</div><div class="content">학부 주전공</div></div>
-        <div class="entry"><div class="label">Philosophy</div><div class="content">학부 다중전공</div></div>
-        <div class="entry"><div class="label">Statistics</div><div class="content">방통대 가서 배움</div></div>
-    </section>
-
-    <section>
-        <h2>Productive Procrastination</h2>
-        <div class="entry">
-            <div class="label">NOTES</div>
-            <div class="content"><a href="https://note.soowanbaek.com/@sw" target="_blank">Microblog</a><p class="sub">Ephemeral thoughts.</p></div>
-        </div>
-        <div class="entry" style="margin-top: 24px;">
-            <div class="label">INSIGHT</div>
-            <div class="content"><a href="https://xn--o39a90m89r.com/@kbnws" target="_blank">적독가(積讀家)</a><p class="sub">책은 읽으려고 사는 게 아니라, 샀기 때문에 언젠가 읽는 것이다...</p></div>
-        </div>
-
-        <div class="card">
-            <div class="card-h">SOUNDTRACKS</div>
-            <a href="https://www.youtube.com/watch?v=Y12ZQzh12Rw" target="_blank" class="item">
-                <div style="font-weight:600;">운동 많이 된다 모음집</div>
-                <div class="sub">도움 많이 된다</div>
-            </a>
-            <a href="https://www.youtube.com/playlist?list=PLS4jAfE9d3aIfAKzy3VwSNDfvBFxpnH-7" target="_blank" class="item">
-                <div style="font-weight:600;">Blood Orange - Essex Honey</div>
-                <div class="sub">Blood Orange</div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=xgNqRJTw6WY" target="_blank" class="item">
-                <div style="font-weight:600;">Susumu Hirasawa - Byakkoya</div>
-                <div class="sub">멋쟁이 아저씨</div>
-            </a>
-        </div>
-    </section>
-
-    <section id="aphorisms">
-        <h2>Other People's Wisdom</h2>
-        <div class="v">
-            <div class="track" id="t">
-                <div class="slide">
-                    <p style="font-size:16px; font-weight:500;">"2시간짜리 은행 강도가 어디 있습니까?<br>천원 한 장 훔치지 않았으니 아무 일도 없었던 겁니다."</p>
-                    <p class="sub">- 무슨 일인가 떠오른다면 정답입니다.</p>
-                </div>
-                <div class="slide">
-                    <p style="font-size:16px; font-weight:500;">"さようなら, 全てのエヴァンゲリオン."<br>
-                    <span style="font-size:14px; opacity:0.8;">(안녕, 모든 에반게리온.)</span></p>
-                    <p class="sub">- 하지만 30주년 기념 완전 신작이 나와버리는...</p>
-                </div>
-                <div class="slide">
-                    <p style="font-size:16px; font-weight:500;">"Choose Reality. Choose Facebook, Twitter,<br>Instagram and hope that someone, somewhere cares."</p>
-                    <p class="sub">- Mark Renton (T2 Trainspotting)</p>
+        <section id="aphorisms">
+            <h2>Other People's Wisdom</h2>
+            <div class="v">
+                <div id="t" class="track">
+                    <div class="slide"><p>"2시간짜리 은행 강도가 어디 있습니까?"</p><p style="font-size:13px; margin-top:10px; opacity:0.6;">— 그러게요!</p></div>
+                    <div class="slide"><p>"さようなら、全てのエヴァンゲリオン。"</p><p style="font-size:13px; margin-top:10px; opacity:0.6;">— 이러고 완전 신작 나옴...</p></div>
                 </div>
             </div>
-        </div>
-        <button class="btn p" onclick="m(-1)">&#10094;</button>
-        <button class="btn n" onclick="m(1)">&#10095;</button>
-        <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-    </section>
+            <button class="btn p" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="btn n" onclick="moveSlide(1)">&#10095;</button>
+            <div class="dots"><span class="dot active"></span><span class="dot"></span></div>
+        </section>
 
-    <section>
-        <h2>Where I Got Lost</h2>
-        <img src="/img/travel-map.png" alt="Travel Map" class="map">
-    </section>
-</main>
+        <section>
+            <h2>Curated Sounds</h2>
+            <div class="v" style="border: 1px solid var(--hr); border-radius: 12px; background: var(--card-bg); overflow: hidden;">
+                <a href="https://www.youtube.com/watch?v=XphyMFdyyEg" target="_blank" rel="noopener noreferrer" style="display:block; padding:18px 22px; border-bottom:1px solid var(--hr); text-decoration:none;">
+                    <div style="font-weight:700; color:var(--tx-main);">Bad Bunny - PERFuMITO NUEVO</div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=Y12ZQzh12Rw" target="_blank" rel="noopener noreferrer" style="display:block; padding:18px 22px; text-decoration:none;">
+                    <div style="font-weight:700; color:var(--tx-main);">운동 많이 된다 모음집</div>
+                </a>
+            </div>
+        </section>
 
-<footer>
-    <div style="opacity:0.6; font-family:monospace; font-size:11px;">Powered by Nginx & Docker. Hosted on Railway.</div>
-    <p style="margin-top:10px; opacity:0.6;">© 2026 sb. No trackers, no cookies, just my ego.</p>
-</footer>
+        <section id="integrated-archive">
+            <h2>Digital Footprints</h2>
+            <div class="archive-box">
+                <div class="archive-section">
+                    <span class="inner-label">CURRENTLY BUGGING ME</span>
+                    <div class="tag-cloud">
+                        <a href="https://note.soowanbaek.com/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EB%B8%94%EB%A1%9C%EA%B7%B8" target="_blank" rel="noopener noreferrer" class="tag-sm">#마이크로블로그</a>
+                        <a href="https://note.soowanbaek.com/tags/%EC%A1%B0%EC%A7%81%EA%B0%9C%ED%8E%B8" target="_blank" rel="noopener noreferrer" class="tag-sm">#조직개편</a>
+                        <a href="https://note.soowanbaek.com/tags/%ED%8E%AD%EA%B7%84" target="_blank" rel="noopener noreferrer" class="tag-sm">#펭귄</a>
+                    </div>
+                </div>
 
-<script>
-    let c=0; const t=document.getElementById('t'), d=document.querySelectorAll('.dot');
-    function m(n){ c=(c+n+3)%3; t.style.transform=`translateX(-${c*100}%)`; d.forEach((x,i)=>x.classList.toggle('active',i===c)); }
-    d.forEach((x,i)=>x.addEventListener('click',()=>m(i-c)));
-</script>
+                <div class="archive-section">
+                    <span class="inner-label" id="grass-label">완벽한 하루 달성률</span>
+                    <div class="stat-row">
+                        <div id="success-rate" class="stat-v">0%</div>
+                        <div style="font-size:11px; font-weight:700; opacity:0.6;">PERFECT DAY RATE</div>
+                    </div>
+                    <div id="heatmap" class="grass-box"></div>
+                </div>
+
+                <div class="archive-section">
+                    <span class="inner-label">DETAILED LOGS</span>
+                    <div id="log-list" class="log-scroll">
+                        </div>
+                    <button id="load-more-btn" class="load-more-btn" onclick="increaseLimit()">LOAD MORE RECORD</button>
+                </div>
+
+                <div class="archive-section" style="background: rgba(188, 71, 73, 0.03);">
+                    <span class="inner-label">SHOWER THOUGHTS</span>
+                    <a href="https://note.soowanbaek.com/@sw" target="_blank" rel="noopener noreferrer" style="color:var(--link); text-decoration:none; border-bottom:2px solid var(--hr); font-weight:700;">Visit My Microblog (if you're deeply interested)</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Where I got lost</h2>
+            <img src="/img/travel-map.png" alt="Travel Map" class="map" onerror="this.style.display='none'">
+        </section>
+    </main>
+
+    <footer>
+        <div style="font-family:monospace; letter-spacing: 1px; color:var(--dm);">Powered by Nginx & Docker. Hosted on Railway.</div>
+        <p style="margin-top:12px; opacity:0.8; font-weight:600;">© 2026 sb. No trackers, no cookies, just my ego.</p>
+    </footer>
+
+    <script>
+        /* [DATA] */
+        const myData = [
+    { date: "2026-03-23", cat: "thought", status: "success", note: "Modern Analog Archive 인터페이스 고도화 작업" },
+    { date: "2026-03-22", cat: "reading", status: "success", note: "수치심 탐구 생활 완독 및 개인적 회고" },
+    { date: "2026-03-21", cat: "work", status: "fail", note: "주말 업무 집중도 저하 및 루틴 재정비 필요" },
+    { date: "2026-03-20", cat: "tech", status: "success", note: "온디바이스 AI 및 에지 컴퓨팅 아티클 큐레이션" },
+    { date: "2026-03-19", cat: "thought", status: "success", note: "기록의 본질에 대한 고찰: 왜 쓰는가에 대하여" },
+    { date: "2026-03-18", cat: "life", status: "success", note: "미니멀리즘 실천을 위한 주변 정리 및 비우기" },
+    { date: "2026-03-17", cat: "work", status: "success", note: "기술 콘텐츠 기획안 초안 완성 및 내부 공유" },
+    { date: "2026-03-16", cat: "thought", status: "fail", note: "복잡한 생각들로 인한 기록의 파편화 정리 실패" }
+        ];
+
+        /* [SLIDER] */
+        let slideIndex = 0;
+        const track = document.getElementById('t'), dots = document.querySelectorAll('.dot');
+        function moveSlide(n) {
+            slideIndex = (slideIndex + n + dots.length) % dots.length;
+            track.style.transform = `translateX(-${slideIndex * 100}%)`;
+            dots.forEach((d, i) => d.classList.toggle('active', i === slideIndex));
+        }
+
+        /* [RENDER LOGIC] */
+        let displayLimit = 5; // 디버깅을 위해 초기값을 5로 설정 (데이터가 많아야 버튼이 보임)
+
+        function increaseLimit() {
+            displayLimit += 5; // 5개씩 추가
+            render(); 
+        }
+
+        function render() {
+            // 히트맵 요소
+            const heatmap = document.getElementById('heatmap');
+            const successRateEl = document.getElementById('success-rate');
+            const grassLabel = document.getElementById('grass-label');
+            
+            // 리스트 요소
+            const listContainer = document.getElementById('log-list');
+            const moreBtn = document.getElementById('load-more-btn');
+            
+            // 1. 초기화
+            heatmap.innerHTML = ''; 
+            listContainer.innerHTML = ''; 
+
+            // 2. 히트맵 & 성공률 계산
+            const now = new Date(), currYear = now.getFullYear(), currMonth = now.getMonth(), today = now.getDate();
+            const lastDay = new Date(currYear, currMonth + 1, 0).getDate();
+            grassLabel.innerText = `${currMonth + 1} Consistency Score`;
+
+            let perfectCount = 0;
+            for (let d = 1; d <= lastDay; d++) {
+                const date = new Date(currYear, currMonth, d), dStr = date.toISOString().split('T')[0];
+                const dayLogs = myData.filter(l => l.date === dStr);
+                const dot = document.createElement('div');
+                dot.className = 'dot-g';
+                if (d > today) dot.style.opacity = "0.2";
+                if (dayLogs.length > 0) {
+                    const isFail = dayLogs.some(l => l.status === 'fail');
+                    if (isFail) { dot.classList.add('fail'); } 
+                    else { dot.classList.add('success'); perfectCount++; }
+                }
+                heatmap.appendChild(dot);
+            }
+            successRateEl.innerText = `${((perfectCount / today) * 100).toFixed(0)}%`;
+
+            // 3. 리스트 출력 (가장 중요한 디버깅 포인트)
+            const sortedLogs = [...myData].sort((a,b) => new Date(b.date) - new Date(a.date));
+            const itemsToShow = sortedLogs.slice(0, displayLimit);
+
+            itemsToShow.forEach(log => {
+                const item = document.createElement('div');
+                item.className = 'log-item';
+                item.innerHTML = `
+                    <div style="font-size:10px; color:var(--dm); font-family:monospace; font-weight:700;">${log.date} / ${log.cat.toUpperCase()}</div>
+                    <div style="margin-top:2px; font-weight:700; color:${log.status === 'success' ? 'var(--tx-main)' : 'var(--accent)'}">
+                        ${log.status === 'success' ? '●' : '○'} ${log.note}
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+
+            // 4. 버튼 노출 로직 (전체 데이터 개수가 현재 표시 개수보다 많을 때만 표시)
+            if (myData.length > displayLimit) {
+                moreBtn.style.display = 'block';
+            } else {
+                moreBtn.style.display = 'none';
+            }
+        }
+
+        // 초기 로딩 시 실행
+        window.onload = render;
+    </script>
 </body>
 </html>
